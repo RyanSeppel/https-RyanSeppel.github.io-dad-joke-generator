@@ -1,0 +1,52 @@
+<body>
+
+<div style="border-radius:35px; width: 500px; min-height: 500px; background-color: #afd666; display: flex; justify-content: center; padding:25px; align-items: center; flex-direction: column;">
+<img style="margin-top: -50px ; background-color: white; border-radius: 50%; width: 100px;" src="https://images.squarespace-cdn.com/content/v1/5d7029e27df27100010e853a/4fbe11f8-8514-44a6-81a8-c22e1b96c483/JGeiger_Elements_RGBCompass+%281%29.png?format=500w"/>
+<h1>
+J. Geiger Consulting
+</h1>
+<h2 style="margin-top: 0">
+Dad Joke Generator
+</h2>
+<br>
+<button id="joke-btn" style="background-color: black; color: white; border-radius: 15px; font-size: 20px; padding: 10px; padding-left: 15px; padding-right: 15px; font-weight: bold;">Generate Dad Joke</button>
+<br>
+    <div id="joke-container" class="joke-container" style="line-height: 1.5; font-weight: bold; font-family: 'calluna'"></div>
+  </div>
+  
+  <style>
+  .joke-container {
+    display: none; 
+    width: 500px; 
+    height: 100px; 
+    margin: 20px auto; 
+    text-align: center; 
+    font-size: 32px;
+  }
+  </style>
+  
+  <script>
+const jokeBtn = document.getElementById("joke-btn");
+const jokeContainer = document.getElementById("joke-container");
+
+jokeBtn.addEventListener("click", async () => {
+  // Clear previous joke text
+  jokeContainer.textContent = '';
+
+  let response = null;
+  let data = null;
+  do {
+    response = await fetch("https://icanhazdadjoke.com/", {
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+    data = await response.json();
+  } while (data.joke.length > 90);
+
+  jokeContainer.textContent = data.joke;
+  jokeContainer.style.display = "block";
+});
+
+  </script>
+  </body>
